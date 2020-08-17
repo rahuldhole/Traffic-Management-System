@@ -1,0 +1,102 @@
+        %%
+		%%in while
+        %%Capture and upload
+        if(camINTRNv==1 && sigstatNv == 0)  
+            handles.emptyN = 0;
+            guidata(hObject, handles);
+            set(handles.text27,'String','Signal break: North'); 
+            if(handles.cam1)
+                im = getsnapshot(vidN);
+                set(handles.text27,'String','Signal break: North>Image Captured'); 
+                rgbmap = ycbcr2rgb(im);
+                dt = datestr(now,'yyyy-mmmm-dd HH:MM:SS.FFF AM');
+                dt = strcat('North: ',dt);
+                imwrite(rgbmap,dt);
+                f = fopen(dt); 
+                d = fread(f,Inf,'*uint8'); % Read in byte stream of file 
+                str=0;
+                str = urlreadpost('http://tms.rahuldhole.com/imgdb/mat_img.php', ... 
+                  {'image_name','North','datetime',dt,'file',d,'version','3','api_key','API-KEY','wait','Y'});
+            end
+        end
+        if(camINTRWv==1 && sigstatWv == 0)  
+            handles.emptyW = 0;
+            guidata(hObject, handles);
+            set(handles.text27,'String','Signal break: West'); 
+            if(handles.cam2)
+                im = getsnapshot(vidW);
+                set(handles.text27,'String','Signal break: West>Image Captured'); 
+                rgbmap = ycbcr2rgb(im);
+                dt = datestr(now,'yyyy-mmmm-dd HH:MM:SS.FFF AM');
+                dt = strcat('West: ',dt);
+                imwrite(rgbmap,dt);
+                f = fopen(dt); 
+                d = fread(f,Inf,'*uint8'); % Read in byte stream of file 
+                str=0;
+                str = urlreadpost('http://tms.rahuldhole.com/imgdb/mat_img.php', ... 
+                  {'image_name','West','datetime',dt,'file',d,'version','3','api_key','API-KEY','wait','Y'});
+            end
+          end
+        if(camINTRSv==1 && sigstatSv == 0)  
+            handles.emptyS = 0;
+            guidata(hObject, handles);
+            set(handles.text27,'String','Signal break: South'); 
+            if(handles.cam3)
+                im = getsnapshot(vidS);
+                set(handles.text27,'String','Signal break: South>Image Captured'); 
+                rgbmap = ycbcr2rgb(im);
+                dt = datestr(now,'yyyy-mmmm-dd HH:MM:SS.FFF AM');
+                dt = strcat('South: ',dt);
+                imwrite(rgbmap,dt);
+                f = fopen(dt); 
+                d = fread(f,Inf,'*uint8'); % Read in byte stream of file 
+                str=0;
+                str = urlreadpost('http://tms.rahuldhole.com/imgdb/mat_img.php', ... 
+                  {'image_name','South','datetime',dt,'file',d,'version','3','api_key','API-KEY','wait','Y'});
+            end
+          end
+          if(camINTREv==1 && sigstatEv == 0)  
+            handles.emptyE = 0;
+            guidata(hObject, handles);
+            set(handles.text27,'String','Signal break: East'); 
+            if(handles.cam4)
+                im = getsnapshot(vidE);
+                set(handles.text27,'String','Signal break: East>Image Captured'); 
+                rgbmap = ycbcr2rgb(im);
+                dt = datestr(now,'yyyy-mmmm-dd HH:MM:SS.FFF AM');
+                dt = strcat('East: ',dt);
+                imwrite(rgbmap,dt);
+                f = fopen(dt); 
+                d = fread(f,Inf,'*uint8'); % Read in byte stream of file 
+                str=0;
+                str = urlreadpost('http://tms.rahuldhole.com/imgdb/mat_img.php', ... 
+                  {'image_name','East','datetime',dt,'file',d,'version','3','api_key','API-KEY','wait','Y'});
+            end
+          end    
+	
+	
+	
+	
+	
+	
+	
+	%%
+	%%in while
+        %%Inactive road closing signal\
+		
+        if(camINTRNv==0 )
+				if(sigstatNv == 1)
+					handles.emptyN = handles.emptyN+1;
+					guidata(hObject, handles);
+					%if 5000 appx. 5 seconds inactive
+					if(handles.emptyN>5000)
+						%%Interrupting 
+						a.digitalWrite(SendINTRW, 1);
+						set(handles.text27,'String','No traffic on North side signal hence closing signal.');
+					end
+				end
+				if(sigstatNv == 0)
+					handles.emptyN = 0;
+					guidata(hObject, handles);
+				end
+        end

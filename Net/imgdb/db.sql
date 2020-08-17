@@ -1,0 +1,13 @@
+<!-- 
+//THIS PROGRAM WILL UPLOAD IMAGE AND WILL RETRIVE FROM DATABASE. UNSING BLOB
+(IF YOU HAVE ANY QUERY CONTACT:rahulpatel541@gmail.com)
+
+
+CREATE TABLE  `images` (
+  `id` int(100) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `image` longblob NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB ;
+
+-->
